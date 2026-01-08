@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+}
+
+
+:root {
+  --color-primary: #050505;
+  --color-secondary: #121212;
+  --color-accent: #3b82f6; /* Electric Blue */
+  --color-muted: #a1a1aa;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  background-color: var(--color-primary);
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Custom selection color to match theme */
+::selection {
+  background: rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+@layer base {
+  :root {
+    /* Emerald Green Accent */
+    --color-accent: #10b981; 
+  }
+}
