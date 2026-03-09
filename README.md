@@ -51,6 +51,17 @@ It allows users to browse, search, and filter shoes based on brand, material, an
 
 - Mongoose
 
+## 📸 Screenshots
+
+### 🏠 Homepage
+![Homepage](./screenshots/s1.jpg)
+
+### 👟 Product Page
+![Product Page](./screenshots/s2.jpg)
+
+### 🔍 Filter Feature
+![Filters](./screenshots/s3.jpg)
+
 ### 📂 Project Structure
 
 ```
