@@ -14,42 +14,42 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAppContext();
 
- const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsLoading(true);
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  // Map the UI "customer/seller" to internal "buyer/seller"
-  const mappedRole = type === "customer" ? "buyer" : "seller";
+    // Map the UI "customer/seller" to internal "buyer/seller"
+    const mappedRole = type === "customer" ? "buyer" : "seller";
 
-  try {
-    const response = await fetch('http://localhost:5000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, role: mappedRole }),
-    });
+    try {
+      const response = await fetch('https://sneaker-hub-x7qg.onrender.com/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, role: mappedRole }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      document.cookie = `clearance_token=${data.token}; path=/; max-age=7200`;
-      document.cookie = `user_role=${data.user.role}; path=/; max-age=7200`;
-      login(data.user);
-      router.push(data.user.role === "seller" ? "/profile/inventory" : "/");
-    } else {
-      // This will now catch the mismatch error
-      alert(data.error); 
+      if (response.ok) {
+        document.cookie = `clearance_token=${data.token}; path=/; max-age=7200`;
+        document.cookie = `user_role=${data.user.role}; path=/; max-age=7200`;
+        login(data.user);
+        router.push(data.user.role === "seller" ? "/profile/inventory" : "/");
+      } else {
+        // This will now catch the mismatch error
+        alert(data.error);
+      }
+    } catch (err) {
+      console.error("Connection_Error", err);
+    } finally {
+      setIsLoading(false);
     }
-  } catch (err) {
-    console.error("Connection_Error", err);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center px-4 relative overflow-hidden selection:bg-[#CCFF00] selection:text-black">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#CCFF00 1px, transparent 1px), linear-gradient(90deg, #CCFF00 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{ backgroundImage: `linear-gradient(#CCFF00 1px, transparent 1px), linear-gradient(90deg, #CCFF00 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[#CCFF00]/5 blur-[120px] rounded-full" />
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-[420px] bg-[#0a0a0a] border border-white/5 rounded-[3rem] overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.8)] z-10 relative">
@@ -75,12 +75,12 @@ export default function LoginPage() {
           <form className="space-y-5" onSubmit={handleLogin}>
             <div className="relative group">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-[#CCFF00] transition-colors" size={18} />
-              <input required type="email" placeholder="EMAIL_REGISTRY" className="w-full bg-white/[0.02] border border-white/5 py-4 pl-12 pr-4 rounded-xl focus:border-[#CCFF00]/30 focus:bg-white/[0.04] outline-none text-sm transition-all italic font-medium" 
+              <input required type="email" placeholder="EMAIL_REGISTRY" className="w-full bg-white/[0.02] border border-white/5 py-4 pl-12 pr-4 rounded-xl focus:border-[#CCFF00]/30 focus:bg-white/[0.04] outline-none text-sm transition-all italic font-medium"
                 onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="relative group">
               <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-[#CCFF00] transition-colors" size={18} />
-              <input required type="password" placeholder="PASSKEY" className="w-full bg-white/[0.02] border border-white/5 py-4 pl-12 pr-4 rounded-xl focus:border-[#CCFF00]/30 focus:bg-white/[0.04] outline-none text-sm transition-all italic font-medium" 
+              <input required type="password" placeholder="PASSKEY" className="w-full bg-white/[0.02] border border-white/5 py-4 pl-12 pr-4 rounded-xl focus:border-[#CCFF00]/30 focus:bg-white/[0.04] outline-none text-sm transition-all italic font-medium"
                 onChange={(e) => setPassword(e.target.value)} />
             </div>
 

@@ -23,7 +23,7 @@ export default function SellerDashboard() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/products', {
+      const response = await fetch('https://sneaker-hub-x7qg.onrender.com/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, sellerId: user?._id }),
@@ -44,7 +44,7 @@ export default function SellerDashboard() {
   return (
     <div className="min-h-screen bg-[#050505] text-white p-8 animate-in fade-in slide-in-from-right-4 duration-500">
       <div className="max-w-6xl mx-auto space-y-12">
-        
+
         {/* --- HEADER --- */}
         <div className="flex justify-between items-end border-b border-white/10 pb-6">
           <div>
@@ -65,31 +65,31 @@ export default function SellerDashboard() {
           <form onSubmit={handleAddAsset} className="lg:col-span-5 space-y-6">
             <div className="bg-[#0a0a0a] border border-white/10 p-8 rounded-[2.5rem] relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 blur-3xl rounded-full" />
-              
+
               <h2 className="text-lg font-black uppercase italic mb-6 flex items-center gap-2 relative z-10">
                 <Package size={20} className="text-[#CCFF00]" /> General_Payload
               </h2>
-              
+
               <div className="space-y-4 relative z-10">
-                <input required type="text" placeholder="Asset Name" 
-                  value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})}
+                <input required type="text" placeholder="Asset Name"
+                  value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-white/[0.03] border border-white/10 p-4 rounded-xl outline-none focus:border-[#CCFF00]/50 text-sm font-medium italic" />
-                
-                <textarea required placeholder="Technical Specifications" rows={3} 
-                  value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}
+
+                <textarea required placeholder="Technical Specifications" rows={3}
+                  value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="w-full bg-white/[0.03] border border-white/10 p-4 rounded-xl outline-none focus:border-[#CCFF00]/50 text-sm font-medium italic" />
-                
+
                 <div className="grid grid-cols-2 gap-4">
-                  <input required type="number" placeholder="Price (₹)" 
-                    value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})}
+                  <input required type="number" placeholder="Price (₹)"
+                    value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                     className="w-full bg-white/[0.03] border border-white/10 p-4 rounded-xl outline-none focus:border-[#CCFF00]/50" />
-                  
-                  <input required type="number" placeholder="Stock Qty" 
-                    value={formData.stock} onChange={(e) => setFormData({...formData, stock: e.target.value})}
+
+                  <input required type="number" placeholder="Stock Qty"
+                    value={formData.stock} onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                     className="w-full bg-white/[0.03] border border-white/10 p-4 rounded-xl outline-none focus:border-[#CCFF00]/50" />
                 </div>
 
-                <button type="submit" disabled={isLoading} 
+                <button type="submit" disabled={isLoading}
                   className="w-full bg-[#CCFF00] text-black font-black py-5 rounded-2xl active:scale-95 transition-all text-xs tracking-[0.2em] uppercase italic flex items-center justify-center gap-3">
                   {isLoading ? <Loader2 className="animate-spin" size={18} /> : <><Plus size={16} strokeWidth={3} /> Initialize_Asset_Entry</>}
                 </button>
