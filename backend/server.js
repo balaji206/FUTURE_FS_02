@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 require('dotenv').config();
 
 const app = express();
@@ -22,9 +23,23 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('CONNECTED_TO_VAULT'))
-  .catch((err) => console.log('VAULT_CONNECTION_ERROR', err));
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('CONNECTED_TO_VAULT');
+  } catch (err) {
+    console.log('VAULT_CONNECTION_ERROR (Atlas Offline) - Booting Temporary Local Memory Vault...');
+    try {
+      const mongoServer = await MongoMemoryServer.create();
+      const memoryUri = mongoServer.getUri();
+      await mongoose.connect(memoryUri);
+      console.log('CONNECTED_TO_MEMORY_VAULT (Ready for Testing!)');
+    } catch (memErr) {
+      console.log('FAILED_TO_BOOT_MEMORY_VAULT', memErr);
+    }
+  }
+}
+connectDB();
 
 // --- 1. SIGNUP ---
 app.post('/api/signup', async (req, res) => {
